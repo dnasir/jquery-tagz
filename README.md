@@ -11,19 +11,19 @@ This plugin is based on the jQuery Tag Input plugin by [XOXCO](http://xoxco.com)
 Include script after the jQuery library (unless you are packaging scripts somehow else):
 
 ```html
-    <script type="text/javascript" src="/path/to/jquery.tagz.js"></script>
+<script type="text/javascript" src="/path/to/jquery.tagz.js"></script>
 ```
 
 Create a HTML input field in your form.
 
 ```html
-    <input type="text" id="tags" />
+<input type="text" id="tags" />
 ```
 
 Initialise the plugin
 
 ```javascript
-    $('#tags').tagz();
+$('#tags').tagz();
 ```
 
 ## Options
@@ -31,26 +31,26 @@ Initialise the plugin
 The following is a list of override-able options:
 
 ```javascript
-	$(selector).tagz({
-        autocompleteOnly: false,
-        autocompleteOptions: undefined,
-        autosize: true,
-        comfortZone: 20,
-        delimiter: ',',
-        height: 100,
-        inputPadding: 12,
-        minChars: 0,
-        placeholderColor: '#666666',
-        placeholderText: 'Add a tag',
-        readonly: false,
-        removeWithBackspace: true,
-        showInput: false,
-        unique: true,
-        width: 300,
-        onAddTag: function() { },
-        onRemoveTag: function() { },
-        onChange: function() { }
-	});
+$(selector).tagz({
+    autocompleteOnly: false,
+    autocompleteOptions: undefined,
+    autosize: true,
+    comfortZone: 20,
+    delimiter: ',',
+    height: 100,
+    inputPadding: 12,
+    minChars: 0,
+    placeholderColor: '#666666',
+    placeholderText: 'Add a tag',
+    readonly: false,
+    removeWithBackspace: true,
+    showInput: false,
+    unique: true,
+    width: 300,
+    onAddTag: function() { },
+    onRemoveTag: function() { },
+    onChange: function() { }
+});
 ```
 
 #### autocompleteOnly
@@ -140,7 +140,7 @@ Tag list container width.
 #### addTag
 
 ```javascript
-    $(selector).tagz('addTag', 'New Tag');
+$(selector).tagz('addTag', 'New Tag');
 ````
 
 Append a new tag to the tag list.
@@ -148,7 +148,7 @@ Append a new tag to the tag list.
 #### removeTag
 
 ```javascript
-    $(selector).tagz('removeTag', 'New Tag');
+$(selector).tagz('removeTag', 'New Tag');
 ````
 
 Removes an existing tag from the tag list.
@@ -156,7 +156,7 @@ Removes an existing tag from the tag list.
 #### destroy
 
 ```javascript
-    $(selector).tagz('destroy');
+$(selector).tagz('destroy');
 ````
 
 Destroys the instance and restores the elements back to pre-init state.
