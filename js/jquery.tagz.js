@@ -1,5 +1,5 @@
 /*
-	jQuery Tagz Plugin 1.0.1
+	jQuery Tagz Plugin 1.0.3
 	
 	Copyright (c) 2013 Dzulqarnain Nasir
 
