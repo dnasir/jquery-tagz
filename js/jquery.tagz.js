@@ -1,5 +1,5 @@
 /*
-	jQuery Tagz Plugin 1.0.0
+	jQuery Tagz Plugin 1.0.1
 	
 	Copyright (c) 2013 Dzulqarnain Nasir
 
@@ -15,24 +15,24 @@
 (function($){
 	// Default options
 	var defaultOptions = {
-		readonly: false,
-		defaultText: 'Add a tag',
-		minChars: 0,
-		width: 300,
-		height: 100,
-		autocompleteOptions: undefined, // Refer to http://api.jqueryui.com/autocomplete/
 		autocompleteOnly: false,
-		showInput: false,
-		delimiter: ',',
-		unique: true,
-		removeWithBackspace: true,
-		placeholderColor: '#666666',
-		autosize: true,
-		comfortZone: 20,
-		inputPadding: 12,
-		onAddTag: function() { },
-		onRemoveTag: function() { },
-		onChange: function() { }
+        autocompleteOptions: undefined,
+        autosize: true,
+        comfortZone: 20,
+        delimiter: ',',
+        height: 100,
+        inputPadding: 12,
+        minChars: 0,
+        placeholderColor: '#666666',
+        placeholderText: 'Add a tag',
+        readonly: false,
+        removeWithBackspace: true,
+        showInput: false,
+        unique: true,
+        width: 300,
+        onAddTag: function() { },
+        onRemoveTag: function() { },
+        onChange: function() { }
 	};
 
 	// Constructor
@@ -49,6 +49,11 @@
 				this.el.hide();
 			}
 
+			var disabled = this.el.attr('disabled');
+			if(typeof disabled !== 'undefined' && disabled !== false){
+				this.options.readonly = true;
+			}
+
 			var id = this.el.attr('id');
 			if(!id){
 				id = this.el.attr('id', 'tags' + new Date().getTime()).attr('id');
@@ -57,7 +62,7 @@
 			// Create holder
 			var markup = '<div id="' + id + '_tagsInput" class="tagsinput"><div id="' + id + '_addTag">';
 			if (!this.options.readonly) {
-				markup += '<input id="' + id + '_tag" value="" data-default="' + this.options.defaultText + '" />';
+				markup += '<input id="' + id + '_tag" value="" data-placeholder="' + this.options.placeholderText + '" />';
 			}
 			markup += '</div><div class="tags_clear"></div></div>';
 
@@ -88,7 +93,7 @@
 			}
 
 			this.fakeInput
-					.val(this.fakeInput.attr('data-default'))
+					.val(this.fakeInput.attr('data-placeholder'))
 					.css('color', this.options.placeholderColor);
 
         	privateMethods.resetAutosize.apply(this);
@@ -118,7 +123,7 @@
 
         	this.fakeInput
 	        	.on('focus', this, function(event) {
-					if (event.data.fakeInput.val() == event.data.fakeInput.attr('data-default')) {
+					if (event.data.fakeInput.val() == event.data.fakeInput.attr('data-placeholder')) {
 						event.data.fakeInput.val('');
 					}
 					event.data.fakeInput.css('color','#000000');
@@ -126,12 +131,12 @@
 				.on('blur', this, $.proxy(function(event) {
 					var value = event.data.fakeInput.val();
 
-					if ((value != '' && value != event.data.fakeInput.attr('data-default'))
+					if ((value != '' && value != event.data.fakeInput.attr('data-placeholder'))
 						&& (value.length >= event.data.options.minChars && (!event.data.options.maxChars || value.length <= event.data.options.maxChars))) {
 							privateMethods.addTag.call(this, value);
 					} else {
 						event.data.fakeInput
-							.val(event.data.fakeInput.attr('data-default'))
+							.val(event.data.fakeInput.attr('data-placeholder'))
 							.css('color', this.options.placeholderColor);
 					}
 					return false;
@@ -233,11 +238,15 @@
 			privateMethods.updateTagsField.call(this, tagsList);
 
 			this.el.trigger('addTag', value);
-			//this.el.trigger('change', tagsList);
+			this.el.trigger('change', tagsList);
 		},
 
 		removeTag: function(value){
 			value = unescape(value);
+
+			if(!privateMethods.tagExist.call(this, value)){
+				return;
+			}
 
 			// Remove from DOM
 			var tags = this.holder.find('.tag');
@@ -252,7 +261,7 @@
 			privateMethods.updateTagsField.call(this, tagsList);
 
 			this.el.trigger('removeTag', value);
-			//this.el.trigger('change', tagsList);
+			this.el.trigger('change', tagsList);
 		},
 
 		doAutosize: function(){
@@ -324,6 +333,11 @@
 
 		updateTagsField: function(tagsList){
 			this.el.val(tagsList.join(this.options.delimiter));
+		},
+
+		destroy: function(){
+			this.holder.remove();
+			this.el.removeAttr('style').show().removeData('plugin__tagsInput');
 		}
 	}
 
@@ -337,6 +351,11 @@
 		removeTag: function(value){
 			privateMethods.removeTag.call(this, value);
 			return this.el;
+		},
+
+		destroy: function(){
+			privateMethods.destroy.call(this);
+			return this.el;
 		}
 	}
 
@@ -347,7 +366,7 @@
 			var el = $(this),
 				instance = el.data('plugin__tagsInput');
 
-			if(instance && Tagz.prototype[method] !== 'undefined'){
+			if(instance && typeof Tagz.prototype[method] !== 'undefined'){
 				return instance[method].apply(instance, Array.prototype.slice.call( args, 1 ));
 			} else if (typeof method === 'object' || !instance){
 				el.data('plugin__tagsInput', new Tagz(this, method));
