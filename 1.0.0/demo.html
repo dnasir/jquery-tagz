@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>jQuery Tagz Plugin Demo</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Stylesheets here -->
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/css/smoothness/jquery-ui-1.10.0.custom.min.css" />
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.tagz.css" />
+
+        <!-- Modernizr or other HTML5 polyfills here -->
+        <script type="text/javascript">
+	        // Removes the no-js class name
+	        window.onload=function(){var a=document.getElementsByTagName("html");a[0].className=a[0].className.replace(new RegExp("(\\s|^)no-js(\\s|$)"),"")};
+        </script>
+	</head>
+	<body>
+		<!-- Content here -->
+		<div class="container">
+			<div class="page-header">
+				<h1>jQuery Tagz Plugin Demo</h1>
+			</div>
+
+			<h4>Basic</h4>
+			<form>
+				<input id="normal" type="text">
+			</form>
+
+			<h4>With predefined values</h4>
+			<form>
+				<input id="prepared" type="text" value="Alpha,Bravo,Charlie">
+			</form>
+
+			<h4>Read-only:</h4>
+			<form>
+				<input id="readonly" type="text" value="Alpha,Bravo,Charlie">
+			</form>
+
+			<h4>With jQuery Autocomplete:</h4>
+			<form>
+				<input id="autocomplete" type="text">
+			</form>
+
+			<h4>Accept only jQuery Autocomplete values:</h4>
+			<form>
+				<input id="autocompleteOnly" type="text">
+			</form>
+		</div>
+
+		<!-- Scripts here -->
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-mockjax/1.5.1/jquery.mockjax.js"></script>
+		<script type="text/javascript" src="js/jquery.tagz.js"></script>
+		<script type="text/javascript">
+			// Some Ajax mocking code
+			$.mockjax({
+				url: '/api/autocomplete',
+				contentType: 'text/json',
+				responseTime: 700,
+				responseText: ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot']
+			});
+
+			$(function(){
+				// Standard basic setup
+				$('#normal').tagz();
+
+				// Using predefined input values
+				$('#prepared').tagz();
+
+				// Read-only
+				$('#readonly').tagz({
+					readonly: true
+				});
+
+				// With jQuery Autocomplete
+				$('#autocomplete').tagz({
+					autocompleteOptions: {
+						source: '/api/autocomplete'
+					}
+				});
+
+				// Restrict input to jQuery Autocomplete options
+				$('#autocompleteOnly').tagz({
+					autocompleteOptions: {
+						source: '/api/autocomplete'
+					},
+					autocompleteOnly: true
+				});
+			});
+		</script>
+	</body>
+</html>
