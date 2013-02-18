@@ -229,7 +229,13 @@
 			    return false;
 			}
 
-			this.inputWrapper.before('<span class="tag"><span>' + value + '&nbsp;&nbsp;</span><a href="#' + value + '" title="Remove tag" class="remove-tag">x</a></span>');
+			var tag = '<span class="tag"><span>' + value + '</span>';
+			if(!this.options.readonly) {
+				tag += '&nbsp;&nbsp;<a href="#' + value + '" title="Remove tag" class="remove-tag">x</a>';
+			}
+			tag += '</span>';
+
+			this.inputWrapper.before(tag);
 
 			tagsList.push(value);
 
@@ -339,7 +345,7 @@
 			this.holder.remove();
 			this.el.removeAttr('style').show().removeData('plugin__tagsInput');
 		}
-	}
+	};
 
 	// Public
 	Tagz.prototype = {
@@ -357,7 +363,7 @@
 			privateMethods.destroy.call(this);
 			return this.el;
 		}
-	}
+	};
 
 	$.fn.tagz = function(method){
 		var args = arguments;
