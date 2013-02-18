@@ -115,10 +115,7 @@
 	        	})
 	        	.on('click', 'a.remove-tag', $.proxy(function(event){
 					event.preventDefault();
-
-					var value = event.target.hash;
-					value = value.substring(value.indexOf('#') + 1);
-					privateMethods.removeTag.call(this, value);
+					privateMethods.removeTag.call(this, event.target.parentElement);
 				}, this));
 
         	this.fakeInput
@@ -164,7 +161,7 @@
 					if(event.keyCode == 8 && this.fakeInput.val() == ''){
 						event.preventDefault();
 
-						var last_tag = this.holder.find('.tag:last').text().replace(/[\s]+x$/, '');
+						var last_tag = this.holder.find('.tag:last');
 						privateMethods.removeTag.call(this, last_tag);
 						this.fakeInput.trigger('focus');
 					}
@@ -248,17 +245,21 @@
 		},
 
 		removeTag: function(value){
-			value = unescape(value);
-
-			if(!privateMethods.tagExist.call(this, value)){
-				return;
-			}
-
 			// Remove from DOM
 			var tags = this.holder.find('.tag');
-			tags.filter(function(){ // TODO: Accommodate unique = false scenario
-				return $.trim($(this).find('> span').text()) == value;
-			}).remove();
+			if(value === Object(value)){
+				tags.filter(value).remove();
+				value = unescape($(value).find('> span').text());
+			} else {
+				value = unescape(value);
+				if(!privateMethods.tagExist.call(this, value)){
+					return;
+				}
+
+				tags.filter(function(){
+					return $.trim($(this).find('> span').text()) == value;
+				}).remove();
+			}
 
 			// Remove from input field
 			var tagsList = this.el.val().split(this.options.delimiter),
