@@ -6,6 +6,8 @@ This plugin converts any standard HTML input field into a style-able tag list.
 
 This plugin is based on the jQuery Tag Input plugin by [XOXCO](http://xoxco.com). The original Github page can be viewed [here](https://github.com/xoxco/jQuery-Tags-Input).
 
+
+
 ## Installation
 
 Include script after the jQuery library (unless you are packaging scripts somehow else):
@@ -25,6 +27,8 @@ Initialise the plugin
 ```javascript
 $('#tags').tagz();
 ```
+
+
 
 ## Options
 
@@ -114,6 +118,8 @@ Tag list container width.
 
     Default value: 300
 
+
+
 ## Methods
 
 #### addTag
@@ -124,6 +130,8 @@ $(selector).tagz('addTag', 'New Tag');
 
 Append a new tag to the tag list.
 
+Returns matching DOM element if single, array of matching DOM elements if multiple.
+
 #### removeTag
 
 ```javascript
@@ -132,6 +140,8 @@ $(selector).tagz('removeTag', 'New Tag');
 
 Removes an existing tag from the tag list.
 
+Returns matching DOM element if single, array of matching DOM elements if multiple.
+
 #### destroy
 
 ```javascript
@@ -139,6 +149,20 @@ $(selector).tagz('destroy');
 ````
 
 Destroys the instance and restores the elements back to pre-init state.
+
+Returns matching DOM element if single, array of matching DOM elements if multiple.
+
+#### tagExist
+
+```javascript
+$(selector).tagz('tagExist', 'Tag to check');
+````
+
+Checks if tag exists in tag list. Only works when used with single DOM element. Multiple DOM elements will return an array of matching DOM elements.
+
+Returns boolean true if tag exists, and false if not.
+
+
 
 ## Events
 

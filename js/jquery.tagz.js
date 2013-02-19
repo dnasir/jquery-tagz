@@ -1,5 +1,5 @@
 /*
-	jQuery Tagz Plugin 1.0.4
+	jQuery Tagz Plugin 1.0.5
 	
 	Copyright (c) 2013 Dzulqarnain Nasir
 
@@ -375,9 +375,9 @@
 				instance;
 
 			if(this.length > 1){
-				this.each(function(){
+				return this.each(function(){
 					instance = $(this).data('plugin__tagsInput');
-					return instance[method].apply(instance, Array.prototype.slice.call(args, 1));
+					instance[method].apply(instance, Array.prototype.slice.call(args, 1));
 				});
 			} else {
 				instance = $(this).data('plugin__tagsInput');
