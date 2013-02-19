@@ -1,5 +1,5 @@
 /*
-	jQuery Tagz Plugin 1.0.3
+	jQuery Tagz Plugin 1.0.4
 	
 	Copyright (c) 2013 Dzulqarnain Nasir
 
@@ -30,6 +30,8 @@
         showInput: false,
         unique: true,
         width: 300,
+        onReady: function() { },
+        onDestroy: function() { },
         onAddTag: function() { },
         onRemoveTag: function() { },
         onChange: function() { }
@@ -201,6 +203,7 @@
 			}
 
 			this.fakeInput.blur();
+			this.options.onReady.call(this.el[0]);
 		},
 
 		addTag: function(value){
@@ -232,16 +235,12 @@
 			}
 			tag += '</span>';
 
-			this.inputWrapper.before(tag);
-
 			tagsList.push(value);
-
-			this.fakeInput.val('').focus();
-
 			privateMethods.updateTagsField.call(this, tagsList);
 
-			this.el.trigger('addTag', value);
-			this.el.trigger('change', tagsList);
+			this.inputWrapper.before(tag);
+			this.fakeInput.val('').focus();
+			this.el.trigger('addTag', value).trigger('change', tagsList.join(this.options.delimiter));
 		},
 
 		removeTag: function(value){
@@ -267,8 +266,7 @@
 			tagsList.splice(index, 1);
 			privateMethods.updateTagsField.call(this, tagsList);
 
-			this.el.trigger('removeTag', value);
-			this.el.trigger('change', tagsList);
+			this.el.trigger('removeTag', value).trigger('change', tagsList.join(this.options.delimiter));
 		},
 
 		doAutosize: function(){
@@ -345,12 +343,13 @@
 		destroy: function(){
 			this.holder.remove();
 			this.el.removeAttr('style').show().removeData('plugin__tagsInput');
+			this.options.onDestroy.call(this.el[0]);
 		}
 	};
 
-	// Public
+	// Public interface
 	Tagz.prototype = {
-		addTag: function(value){
+		addTag: function(value){ // TODO: Prevent adding by code?
 			privateMethods.addTag.call(this, value);
 			return this.el;
 		},
@@ -360,6 +359,10 @@
 			return this.el;
 		},
 
+		tagExist: function(value){
+			return privateMethods.tagExist.call(this, value);
+		},
+
 		destroy: function(){
 			privateMethods.destroy.call(this);
 			return this.el;
@@ -367,20 +370,26 @@
 	};
 
 	$.fn.tagz = function(method){
-		var args = arguments;
+		if(typeof method === 'string'){
+			var args = arguments,
+				instance;
 
-		return this.each(function(){
-			var el = $(this),
-				instance = el.data('plugin__tagsInput');
-
-			if(instance && typeof Tagz.prototype[method] !== 'undefined'){
-				return instance[method].apply(instance, Array.prototype.slice.call( args, 1 ));
-			} else if (typeof method === 'object' || !instance){
-				el.data('plugin__tagsInput', new Tagz(this, method));
+			if(this.length > 1){
+				this.each(function(){
+					instance = $(this).data('plugin__tagsInput');
+					return instance[method].apply(instance, Array.prototype.slice.call(args, 1));
+				});
 			} else {
-				$.error('Method ' + method + ' not found.');
+				instance = $(this).data('plugin__tagsInput');
+				return instance[method].apply(instance, Array.prototype.slice.call(args, 1));
 			}
-		});
+		} else if(typeof method === 'object' || !method){
+			return this.each(function(){
+				$(this).data('plugin__tagsInput', new Tagz(this, method));
+			});
+		} else {
+			$.error('Method ' + method + ' not found.');
+		}
 	};
 
 })(jQuery);
