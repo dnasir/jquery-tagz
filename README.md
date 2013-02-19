@@ -166,28 +166,62 @@ Returns boolean true if tag exists, and false if not.
 
 ## Events
 
-#### onReady()
+#### onReady
 
 Fires when instance is ready.
 
-#### onDestroy()
+```javascript
+$(selector).tagz({
+    onReady: function(){
+        // do something
+    }
+})
+````
+
+#### onDestroy
 
 Fires when instance is destroyed.
 
-#### onAddTag(value)
+```javascript
+$(selector).tagz({
+    onDestroy: function(){
+        // do something
+    }
+})
+````
+
+#### onAddTag
 
 Fires when a tag is added.
 
-    value: value of added tag
+```javascript
+$(selector).tagz({
+    onAddTag: function(addedTagValue){
+        // do something
+    }
+})
+````
 
-#### onRemoveTag(value)
+#### onRemoveTag
 
 Fires when a tag is removed.
 
-    value: value of removed tag
+```javascript
+$(selector).tagz({
+    onRemoveTag: function(removedTagValue){
+        // do something
+    }
+})
+````
 
-#### onChange(value)
+#### onChange
 
 Fires when tag list is changed.
 
-    value: comma-separated value of tag list
+```javascript
+$(selector).tagz({
+    onChange: function(newTagList){
+        // do something
+    }
+})
+````
