@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
 	<head>
 		<meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -13,13 +10,37 @@
         <!-- Stylesheets here -->
         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/css/smoothness/jquery-ui-1.10.0.custom.min.css" />
         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.tagz.css" />
+        <style type="text/css">
+        	.bs-docs-example {
+        		position: relative;
+				margin: 15px 0;
+				padding: 39px 19px 14px;
+				background-color: #fff;
+				border: 1px solid #ddd;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+				border-radius: 4px;
+        	}
 
-        <!-- Modernizr or other HTML5 polyfills here -->
-        <script type="text/javascript">
-	        // Removes the no-js class name
-	        window.onload=function(){var a=document.getElementsByTagName("html");a[0].className=a[0].className.replace(new RegExp("(\\s|^)no-js(\\s|$)"),"")};
-        </script>
+        	.bs-docs-example:after {
+        		content: "Example";
+				position: absolute;
+				top: -1px;
+				left: -1px;
+				padding: 3px 7px;
+				font-size: 12px;
+				font-weight: bold;
+				background-color: #f5f5f5;
+				border: 1px solid #ddd;
+				color: #9da0a4;
+				-webkit-border-radius: 4px 0 4px 0;
+				-moz-border-radius: 4px 0 4px 0;
+				border-radius: 4px 0 4px 0;
+        	}
+        </style>
+        <link rel="stylesheet" type="text/css" href="css/jquery.tagz.css" />
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.css">
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeDefault.css">
 	</head>
 	<body>
 		<!-- Content here -->
@@ -29,29 +50,129 @@
 			</div>
 
 			<h4>Basic</h4>
-			<form>
-				<input id="normal" type="text">
-			</form>
+			<p>Simple basic tag input.</p>
+
+			<div class="bs-docs-example">
+				<form>
+					<input id="normal" type="text">
+				</form>
+			</div>
+
+			<h6>Code</h6>
+			<div>
+				<script type="syntaxhighlighter" class="brush: html"><![CDATA[
+					<form>
+						<input id="normal" type="text">
+					</form>
+
+					<script type="text/javascript">
+						$('#normal').tagz();
+					&lt;/script>
+				]]></script>
+			</div>
 
 			<h4>With predefined values</h4>
-			<form>
-				<input id="prepared" type="text" value="Alpha,Bravo,Charlie">
-			</form>
+			<p>Simple tag input with predefined values.</p>
+
+			<div class="bs-docs-example">
+				<form>
+					<input id="prepared" type="text" value="Alpha,Bravo,Charlie">
+				</form>
+			</div>
+
+			<h6>Code</h6>
+			<div>
+				<script type="syntaxhighlighter" class="brush: html"><![CDATA[
+					<form>
+						<input id="prepared" type="text" value="Alpha,Bravo,Charlie">
+					</form>
+
+					<script type="text/javascript">
+						$('#normal').tagz();
+					&lt;/script>
+				]]></script>
+			</div>
 
 			<h4>Read-only:</h4>
-			<form>
-				<input id="readonly" type="text" value="Alpha,Bravo,Charlie">
-			</form>
+			<p>Read only tag input field.</p>
+
+			<div class="bs-docs-example">
+				<form>
+					<input id="readonly" type="text" value="Alpha,Bravo,Charlie">
+				</form>
+			</div>
+
+			<h6>Code</h6>
+			<div>
+				<script type="syntaxhighlighter" class="brush: html"><![CDATA[
+					<form>
+						<input id="readonly" type="text" value="Alpha,Bravo,Charlie">
+					</form>
+
+					<script type="text/javascript">
+						$('#normal').tagz({
+							readonly: true
+						});
+					&lt;/script>
+				]]></script>
+			</div>
 
 			<h4>With jQuery Autocomplete:</h4>
-			<form>
-				<input id="autocomplete" type="text">
-			</form>
+			<p>Tag field with jQuery Autocomplete.</p>
+
+			<div class="bs-docs-example">
+				<form>
+					<input id="autocomplete" type="text">
+				</form>
+			</div>
+
+			<h6>Code</h6>
+			<div>
+				<script type="syntaxhighlighter" class="brush: html"><![CDATA[
+					<form>
+						<input id="autocomplete" type="text">
+					</form>
+
+					<script type="text/javascript">
+						$('#normal').tagz({
+							autocompleteOptions: {
+								source: '/api/autocomplete'
+							}
+						});
+					&lt;/script>
+				]]></script>
+			</div>
 
 			<h4>Accept only jQuery Autocomplete values:</h4>
-			<form>
-				<input id="autocompleteOnly" type="text">
-			</form>
+			<p>Tag field that accepts only Autocomplete values.</p>
+
+			<div class="bs-docs-example">
+				<form>
+					<input id="autocompleteOnly" type="text">
+				</form>
+			</div>
+
+			<h6>Code</h6>
+			<div>
+				<script type="syntaxhighlighter" class="brush: html"><![CDATA[
+					<form>
+						<input id="autocompleteOnly" type="text">
+					</form>
+
+					<script type="text/javascript">
+						$('#normal').tagz({
+							autocompleteOptions: {
+								source: '/api/autocomplete'
+							},
+							autocompleteOnly: true
+						});
+					&lt;/script>
+				]]></script>
+			</div>
+
+			<br>
+
+			<p class="text-center"><small>Copyright &copy; 2013 <a href="http://dnasir.com">Dzulqarnain Nasir</a></small></p>
 		</div>
 
 		<!-- Scripts here -->
@@ -95,6 +216,12 @@
 					autocompleteOnly: true
 				});
 			});
+		</script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushXml.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.js"></script>
+		<script type="text/javascript">
+			SyntaxHighlighter.all();
 		</script>
 	</body>
 </html>
