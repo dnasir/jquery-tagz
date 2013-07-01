@@ -2,7 +2,7 @@
 
 This plugin converts any standard HTML input field into a style-able tag list.
 
-[View Demo](http://dnasir.com/github/jquery.tagz/demo.html)
+[View Demo](http://dnasir.com/github/jquery-tagz/demo.html)
 
 This plugin is based on the jQuery Tag Input plugin by [XOXCO](http://xoxco.com). The original Github page can be viewed [here](https://github.com/xoxco/jQuery-Tags-Input).
 
